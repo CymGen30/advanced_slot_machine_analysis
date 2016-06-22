@@ -529,7 +529,6 @@ set(h,'FaceColor',c('fern green'),'EdgeColor','w')
 hLabel(1) = xlabel('BIS Total Score');
 hLabel(2) = ylabel('Number of Subjects');
 hTitle= title('BIS Total Score Across Subjects');
-keyboard
 purty_plot(hFig,hGCA,[],hLabel,hTitle,[]);
 !cp purtyplot.pdf ../../drafts/figures/bishist.pdf
 

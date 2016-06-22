@@ -99,13 +99,9 @@ for i = 1:length(subjects)
     % Fix dimensions:
     if length(bets)<100
         bets(end+1:100) = 0;
-        grade(end+1:100) = 0;
-        performance(end+1:100) = 0;
-        gamble(end+1:100) = 0;
-        cashout(end+1:100) = 0;
-        switches(end+1:100) = 0;
-        current_machine(end+1:100) = 0;
+        grad
     end
+    
     
     % Summary statistics:
     % Variance of bet behaviour
