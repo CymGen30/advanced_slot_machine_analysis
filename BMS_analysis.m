@@ -1,6 +1,8 @@
-function BMS_analysis(analysis_name, subject_type)
-
-load(['../results/' sprintf('%s',analysis_name) '/parameter_workspace_' sprintf('%d',subject_type)])
+function BMS_analysis(results_dir,analysis_name, subject_type)
+home = pwd;
+cd(results_dir)
+load('parameter_workspace.mat')
+cd(home);
 
 %% BMS analysis
 %{
@@ -12,7 +14,8 @@ end
 
 %}
 
-[allBMS{1},allBMS{2},allBMS{3}] = spm_BMS(binFEgrid);
+FE_grid = squeeze(pars.FE);
+[allBMS{1},allBMS{2},allBMS{3}] = spm_BMS(FE_grid);
 
 
-save (['../results/' sprintf('%s',analysis_name) '/bms_results_' sprintf('%d',subject_type)], 'allBMS');
+save ([results_dir 'bms_results_' sprintf('%d',subject_type)], 'allBMS');

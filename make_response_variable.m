@@ -19,21 +19,21 @@ allY{1} = betswitchup;
 
 % 2. Bet switch up, gamble
 clear allswitch
-gamble = stats{subject_type}.data{subject_num}.gamble';
+gamble = stats{subject_type}.data{subject_num}.gamble;
 allswitch = nansum([betswitchup gamble],2); % sums every row together
 allswitch = +(allswitch~=0);
 allY{2} = allswitch;
 
 % 3. Bet switch up, gamble, cashout
 clear allswitch
-cashout = stats{subject_type}.data{subject_num}.cashout';
+cashout = stats{subject_type}.data{subject_num}.cashout;
 allswitch = nansum([betswitchup gamble cashout],2);
 allswitch = +(allswitch~=0);
 allY{3} = allswitch;
 
 % 4. Bet switch up, machine switch, gamble, cashout
 clear allswitch
-machineSwitch = stats{subject_type}.data{subject_num}.machineSwitches';
+machineSwitch = stats{subject_type}.data{subject_num}.machineSwitches;
 allswitch = nansum([betswitchup machineSwitch gamble cashout],2);
 allswitch = +(allswitch~=0);
 allY{4} = allswitch;

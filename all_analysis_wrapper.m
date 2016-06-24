@@ -40,12 +40,12 @@ end
 %% Reproduce best model from paper
 % Set this flag if you want to run the 
 % winning model from Paliwal, Petzschner et al, 2014
-PAPER = 1;
+PAPER = 0;
 
 % Speficy which steps (as labelled) need to be done:
 % 1 is done, 0 is to be done 
-done(1) = 0;
-done(2) = 0;
+done(1) = 1;
+done(2) = 1;
 done(3) = 0;
 done(4) = 0;
 done(5) = 0;
@@ -157,14 +157,14 @@ end
 if ~done(4)
 	% Run model comparison
     if ~PAPER
-        BMS_analysis(analysis_name);
+        BMS_analysis(results_dir,analysis_name,1);
         
         % Do not pre-select a winning model
         idxx = 0;
         idxy = 0;
         
         % Pick best parameters
-        winningmodel = pick_best_pars(analysis_name, subject_type, idxx, idxy);
+        winningmodel = pick_best_pars(results_dir,analysis_name, subject_type, idxx, idxy);
     else
         winningmodel = 1;
     end

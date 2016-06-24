@@ -13,7 +13,7 @@ if idxx==0 | idxy==0
     end
     idxy = ceil(idx/3);
 end
-binFEgrid = pars.FE;
+binFEgrid = 
 omega_all = pars.omega;
 theta_all = pars.theta;
 beta_all = pars.beta_all;
@@ -23,5 +23,5 @@ theta = squeeze(theta_all(idxy,idxx,:));
 bbeta = squeeze(beta_all(idxy,idxx,:));
 
 
-save ([results_dir 'parameter_workspace'],'omega_all','theta_all','beta_all','binFEgrid','omega','theta','bbeta','pars');
+save ([results_dir '/parameter_workspace_' sprintf('%d',subject_type)],'omega_all','theta_all','beta_all','binFEgrid','omega','theta','bbeta');
 

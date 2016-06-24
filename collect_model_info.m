@@ -27,7 +27,7 @@ else
             for nn = 1:3
                 for i = 1:length(stats{g}.labels)
                     % Pull out binary free energy information
-                    binFEgrid(:,:,i) = [reshape(stats{subject_type}.hgf.bin_FE',1,12) stats{g}.rw_FE(1,:)];
+                    binFEgrid(:,:,i) = [reshape(stats{subject_type}.hgf.bin_FE(:,:,i),1,12) stats{g}.rw_FE(1,:)];
                     kappa_all(n,nn,i) = stats{subject_type}.hgf.bin(n,nn,i).p_prc.ka(:,2);
                     theta_all(n,nn,i) = stats{subject_type}.hgf.bin(n,nn,i).p_prc.om(:,3);
                     omega_all(n,nn,i) = stats{subject_type}.hgf.bin(n,nn,i).p_prc.om(:,2);
