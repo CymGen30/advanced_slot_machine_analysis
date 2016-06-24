@@ -26,7 +26,7 @@ allswitch = +(allswitch~=0);
 
 % 3. Bet switch up, gamble, cashout
 clear allswitch
-cashout = stats{subject_type}.data{subject_num}.cashout';
+cashout = stats{subject_type}.data{subject_num}.cashout;
 allswitch = nansum([betswitchup gamble cashout],2);
 allswitch = +(allswitch~=0);
 

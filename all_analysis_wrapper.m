@@ -45,13 +45,13 @@ PAPER = 1;
 % Speficy which steps (as labelled) need to be done:
 % 1 is done, 0 is to be done 
 done(1) = 0;
-done(2) = 1;
-done(3) = 1;
-done(4) = 1;
-done(5) = 1;
-done(6) = 1;
-done(7) = 1;
-done(8) = 1;
+done(2) = 0;
+done(3) = 0;
+done(4) = 0;
+done(5) = 0;
+done(6) = 0;
+done(7) = 0;
+done(8) = 0;
 
 % Specify the following variables in your matlab environment
 analysis_name = ANALYSIS_NAME;
