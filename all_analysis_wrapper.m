@@ -10,7 +10,7 @@
 %       is stored (also please make sure this ends in a slash)
 %
 %       4. PATH_TO_RESULTS_FOLDER := where you would like to store your
-%       results that do not contain sensitive patient data 
+%       results that do not contain sensitive patient data
 %       (again, please make sure this ends in a slash)
 %
 % Optional additions:
@@ -18,14 +18,14 @@
 %       5. QUESTIONNAIRE_STRUCT := full path to questionnaire struct
 % If your raw data has already been processed into a struct, you must speficy
 %       6. STATS_STRUCT := full path to stats struct
-% 
+%
 % Finally, if you want to run the winning model from Paliwal, Petzschner et
 % al, set:
-% 
+%
 %       7. PAPER = 1;
 %
 % The questionnaire struct is subject-specific questionnaire values
-% The questionnaire struct must have a labels field, which should be the same 
+% The questionnaire struct must have a labels field, which should be the same
 % as the stats{subject_type}.labels field, to ensure subject-to-questionnaire matching
 % If you want to only run the winning model from the paper, set the PAPER flag to 1
 
@@ -38,12 +38,12 @@ if ~exist(PATH_TO_RESULTS_FOLDER)
 end
 
 %% Reproduce best model from paper
-% Set this flag if you want to run the 
+% Set this flag if you want to run the
 % winning model from Paliwal, Petzschner et al, 2014
 PAPER = 0;
 
 % Speficy which steps (as labelled) need to be done:
-% 1 is done, 0 is to be done 
+% 1 is done, 0 is to be done
 done(1) = 1;
 done(2) = 1;
 done(3) = 0;
@@ -64,7 +64,7 @@ if ~exist('STATS_STRUCT')
     else
         subject_dir = LIST_OF_SUBJECT_DIRECTORIES;
     end
-
+    
     subject_type = 1:length(subject_dir);
 else
     stats_struct = STATS_STRUCT;
@@ -79,7 +79,7 @@ load game_trace.mat
 % N.B: stats struct has the following structure: stats{subject_type}.fields
 if ~done(1)
     if ~exist('STATS_STRUCT')
-
+        
         stats = {};
         for i = 1:length(subject_dir)
             stats{i} = output2mat(subject_dir{i})
@@ -96,21 +96,25 @@ if ~done(1)
                 continue;
             else
                 if sum(strcmp(stats{j}.labels, qstruct{j}.labels) == 0)>0
-                    error('Labels don''t match up! Check your data');
+                    error('Labels don''t match up! Check your label order. Remember that all data must be re-orderd as well.');
                 else
-                    if iscell(qstruct{j}.BIS_Total)
-                        stats{j}.BIS_Total = cell2mat(qstruct{j}.BIS_Total);
+                    names = fieldnames(qstruct)
+                    for f = 1:length(names)
+                        if strfind(names(i),'BIS');
+                            bis_field = names(i);
+                        end
+                    end
+                    if iscell(getfield(qstruct,bis_field))
+                        stats{j}.BIS_Total = cell2mat(getfield(qstruct,bis_field));
                     else
-                        stats{j}.BIS_Total = qstruct{j}.BIS_Total;
+                        stats{j}.BIS_Total = getfield(qstruct,bis_field);
                     end
                 end
             end
         end
     end
-
     data_name = [data_dir 'stats_' analysis_name];
     save(data_name,'stats');
-
 else
     load(stats_struct)
 end
@@ -155,21 +159,17 @@ end
 
 %% Step 4: Run all BMS analysis
 if ~done(4)
-	% Run model comparison
+    % Run model comparison
     if ~PAPER
         BMS_analysis(results_dir,analysis_name,1);
-        
         % Do not pre-select a winning model
         idxx = 0;
-        idxy = 0;
-        
+        idxy = 0;    
         % Pick best parameters
         winningmodel = pick_best_pars(results_dir,analysis_name, subject_type, idxx, idxy);
     else
         winningmodel = 1;
     end
-
-
     if ~PAPER
         if winningmodel == 1 | winningmodel == 4
             printbeta = 1;
@@ -194,7 +194,7 @@ end
 %% Step 6: Print all tables:
 
 if ~done(6)
-	printtable(analysis_name,printbeta);
+    printtable(analysis_name,printbeta);
 end
 
 %% Step 7: Print all figures from paper:
@@ -206,11 +206,9 @@ end
 %% Step 8: Run a pdf of all tables
 
 if ~done(7)
-	!pdflatex alltables.tex
-	!open -a Preview alltables.pdf
-	copyfile('./alltables.pdf',[PATH_TO_RESULTS_FOLDER sprintf('%s',analysis_name) '/' sprintf('%s',analysis_name) '.pdf']);
+    !pdflatex alltables.tex
+    !open -a Preview alltables.pdf
+    copyfile('./alltables.pdf',[PATH_TO_RESULTS_FOLDER sprintf('%s',analysis_name) '/' sprintf('%s',analysis_name) '.pdf']);
 end
-
-% CREATE A TEMPLATE OF ALL THE FIGURES AND TABLES
 
 
