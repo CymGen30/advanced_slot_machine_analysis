@@ -15,7 +15,7 @@ end
 %}
 
 FE_grid = squeeze(pars.FE);
+FE_grid = FE_grid';
 [allBMS{1},allBMS{2},allBMS{3}] = spm_BMS(FE_grid);
-
 
 save ([results_dir 'bms_results_' sprintf('%d',subject_type)], 'allBMS');

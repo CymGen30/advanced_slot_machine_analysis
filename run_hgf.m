@@ -25,9 +25,11 @@ num_u = length(allU);
 %% Construct response variables
 if PAPER
     allY = make_winning_response_variable(subject_type, subject_num,stats);
+    resp_var = 1;
 else
     allY = make_response_variable(subject_type, subject_num,stats);
 end
+
 
 %% Run model grid
 for k = 1:num_u
